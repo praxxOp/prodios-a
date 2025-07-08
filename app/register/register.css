@@ -1,46 +1,113 @@
 /* register.css */
 .register-container {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #09090B;
-  }
-  
-  .register-form {
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    background-color: rgba(74, 144, 226, 0.31);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.125);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 20vw;
-    height: 55vh;
-    gap: 20px;
-  }
-  
-  .register-input {
-    padding: 0.75rem;
+  min-height: 100vh;
+  display: flex;
+  background: #09090b;
+}
+
+.register-form-container {
+  width: 40%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+justify-content: center;
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem 2rem 2rem 2rem;
+  gap: 1.2rem;
+}
+
+.register-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.register-subtitle {
+  color: #b3b3b3;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.register-input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  background: #232325;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  outline: none;
+}
+.register-input::placeholder {
+  color: #b3b3b3;
+  opacity: 1;
+}
+
+.register-password-note {
+  color: #b3b3b3;
+  font-size: 0.95rem;
+  margin-top: -0.7rem;
+  margin-bottom: 0.2rem;
+  width: 100%;
+  text-align: left;
+}
+
+.register-button {
+  width: 100%;
+  padding: 1rem 0;
+  background: #fff;
+  color: #18181b;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.register-button:hover {
+  background: #232325;
+  color: #fff;
+}
+
+.register-error {
+  color: #ff4d4f;
+  font-size: 0.95rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 0.2rem;
+}
+
+.register-login-link {
+  color: #b3b3b3;
+  font-size: 1rem;
+  margin-top: 1.2rem;
+  text-align: center;
+  width: 100%;
+}
+.register-login-link span {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 0.2rem;
+}
+.register-login-link span:hover {
+  text-decoration: underline;
+}
+
+.register-label {
+    color: #b3b3b3;
     font-size: 1rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-  }
-  
-  .register-button {
-    padding: 0.75rem;
-    background-color: #333;
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .register-error {
-    color: red;
-    font-size: 0.9rem;
-  }
-  
+    font-weight: 500;
+    margin-bottom: -0.7rem;
+}

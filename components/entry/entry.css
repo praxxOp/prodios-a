@@ -1,5 +1,5 @@
 .entry-main {
-  width: 50%;
+  width: 60%;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -18,7 +18,7 @@
 .entry-main-container-tagline {
   position: absolute;
   z-index: 9;
-  color: black;
+  color: white;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
