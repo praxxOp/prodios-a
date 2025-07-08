@@ -9,7 +9,7 @@ export default function DashboardPage() {
       method: 'POST',
     });
 
-    router.push('/login');
+    router.push('/');
   };
 
   return (

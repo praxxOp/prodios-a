@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import './register.css'; 
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function RegisterPage() {
     });
 
     if (res.ok) {
-      router.push('/login');
+      router.push('/');
     } else {
       const data = await res.json();
       setError(data.message || 'Registration failed');
@@ -28,17 +29,17 @@ export default function RegisterPage() {
   };
 
   return (
-    <div style={styles.container}>
-      <form onSubmit={handleRegister} style={styles.form}>
+    <div className="register-container">
+      <form onSubmit={handleRegister} className="register-form">
         <h2>Register</h2>
-        {error && <p style={styles.error}>{error}</p>}
+        {error && <p className="register-error">{error}</p>}
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          style={styles.input}
+          className="register-input"
         />
         <input
           type="password"
@@ -46,49 +47,10 @@ export default function RegisterPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          style={styles.input}
+          className="register-input"
         />
-        <button type="submit" style={styles.button}>Sign Up</button>
+        <button type="submit" className="register-button">Sign Up</button>
       </form>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    minHeight: '100vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    background: '#f0f2f5',
-  },
-  form: {
-    background: '#fff',
-    padding: '2rem',
-    borderRadius: '12px',
-    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1rem',
-    width: '300px',
-  },
-  input: {
-    padding: '0.75rem',
-    fontSize: '1rem',
-    borderRadius: '8px',
-    border: '1px solid #ccc',
-  },
-  button: {
-    padding: '0.75rem',
-    backgroundColor: '#333',
-    color: 'white',
-    fontWeight: 'bold',
-    border: 'none',
-    borderRadius: '8px',
-    cursor: 'pointer',
-  },
-  error: {
-    color: 'red',
-    fontSize: '0.9rem',
-  },
-};
