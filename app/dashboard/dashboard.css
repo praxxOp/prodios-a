@@ -1,0 +1,107 @@
+.dashboard {
+  background-color: black;
+  min-height: 100vh;
+  min-width: 100%;
+}
+.dashboard .header {
+  display: flex;
+  height: 20vh;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0% 2%;
+}
+.header h1 {
+  font-size: 3vw;
+  color: white;
+}
+.header-buttons{
+    display: flex;
+    width: 25%;
+}
+
+.new-task-button,
+.logout-button {
+ background: #fff;
+  color: #18181b;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  width: 12vw;
+  height: 5vh;
+  margin-left: 1rem;
+}
+.new-task-button:hover,
+.logout-button:hover {
+  background: #232325;
+  color: #fff;
+}
+
+.task-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 340px;
+    padding: 2rem 1.5rem;
+    border-radius: 24px;
+    background: rgba(30, 41, 59, 0.7);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: center;
+    z-index: 10;
+}
+
+.task-form input,
+.task-form select {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    outline: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.task-form button {
+    width: 100%;
+    padding: 1rem 0;
+    background: #fff;
+    color: #18181B;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.task-form button:hover {
+    background: #232325;
+    color: #fff;
+}
+
+.task-form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.35);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
