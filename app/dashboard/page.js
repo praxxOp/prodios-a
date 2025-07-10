@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import "./dashboard.css";
 import { Neuo } from "../font";
@@ -31,6 +31,52 @@ export default function DashboardPage() {
   const [editIndex, setEditIndex] = useState(null);
   const [editColumn, setEditColumn] = useState(null);
   const [dragged, setDragged] = useState(null); // { colKey, index }
+
+  const saveTimeout = useRef(null);
+
+  // Load tasks from DB on mount
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const res = await fetch("/api/tasks");
+      if (res.ok) {
+        const data = await res.json();
+        const grouped = {
+          "To Do": [],
+          "In Progress": [],
+          Review: [],
+          Done: [],
+        };
+        for (const task of data) {
+          grouped[task.status].push({
+            title: task.title,
+            description: task.description,
+            dueDate: task.due_date,
+            priority: task.priority,
+          });
+        }
+        setTasks(grouped);
+      }
+    };
+    fetchTasks();
+  }, []);
+
+  // Save tasks to DB when they change
+  useEffect(() => {
+    if (saveTimeout.current) clearTimeout(saveTimeout.current);
+
+    saveTimeout.current = setTimeout(() => {
+      const saveTasks = async () => {
+        await fetch("/api/tasks", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(tasks),
+        });
+      };
+      saveTasks();
+    }, 1000);
+
+    return () => clearTimeout(saveTimeout.current);
+  }, [tasks]);
 
   const resetForm = () => {
     setNewTask("");
@@ -74,7 +120,6 @@ export default function DashboardPage() {
     setTasks(updated);
   };
 
-  // Drag and Drop Handlers
   const handleDragStart = (colKey, idx) => {
     setDragged({ colKey, idx });
   };
