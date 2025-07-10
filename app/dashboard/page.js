@@ -118,9 +118,9 @@ export default function DashboardPage() {
 
       {showForm && (
         <div className="task-form-overlay" onClick={resetForm}>
-          <div className="task-form" onClick={e => e.stopPropagation()}>
-            <input type="text" placeholder="Task Title" value={newTask} onChange={e => setNewTask(e.target.value)} />
-            <textarea placeholder="Task Description" value={taskDescription} onChange={e => setTaskDescription(e.target.value)} />
+          <div className={`task-form ${Neuo.className}`} onClick={e => e.stopPropagation()}>
+            <input type="text" placeholder="Title." value={newTask} onChange={e => setNewTask(e.target.value)} />
+            <textarea placeholder="Description." value={taskDescription} onChange={e => setTaskDescription(e.target.value)} />
             <input type="date" value={taskDueDate} onChange={e => setTaskDueDate(e.target.value)} />
             <select value={taskPriority} onChange={e => setTaskPriority(e.target.value)}>
               <option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option>
@@ -128,7 +128,7 @@ export default function DashboardPage() {
             <select value={selectedColumn} onChange={e => setSelectedColumn(e.target.value)}>
               {columns.map(col => <option key={col.key} value={col.key}>{col.title}</option>)}
             </select>
-            <button onClick={handleAddOrUpdateTask}>{editIndex !== null ? "Update" : "Add"}</button>
+            <button onClick={handleAddOrUpdateTask}>{editIndex !== null ? "Update Task" : "Add Task"}</button>
           </div>
         </div>
       )}
