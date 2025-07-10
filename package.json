@@ -9,12 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "latest",
-    "react": "latest",
-    "react-dom": "latest",
-    "pg": "latest",
+    "framer-motion": "latest",
     "jsonwebtoken": "latest",
-    "framer-motion": "latest"
+    "motion": "^12.23.3",
+    "next": "latest",
+    "pg": "latest",
+    "react": "latest",
+    "react-dom": "latest"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

@@ -187,6 +187,10 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  cursor: grab;
+}
+.kanban-card.dragging {
+  cursor: grabbing;
 }
 
 .kanban-card-meta {
