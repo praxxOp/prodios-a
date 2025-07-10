@@ -12,6 +12,13 @@ const initialTasks = {
   Done: [],
 };
 
+const columns = [
+  { key: "To Do", title: "To Do", className: "todo" },
+  { key: "In Progress", title: "In Progress", className: "inprogress" },
+  { key: "Review", title: "Review", className: "review" },
+  { key: "Done", title: "Done", className: "done" },
+];
+
 export default function DashboardPage() {
   const router = useRouter();
   const [tasks, setTasks] = useState(initialTasks);
@@ -93,9 +100,9 @@ export default function DashboardPage() {
               value={selectedColumn}
               onChange={(e) => setSelectedColumn(e.target.value)}
             >
-              {Object.keys(tasks).map((col) => (
-                <option key={col} value={col}>
-                  {col}
+              {columns.map((col) => (
+                <option key={col.key} value={col.key}>
+                  {col.title}
                 </option>
               ))}
             </select>
@@ -104,18 +111,25 @@ export default function DashboardPage() {
         </div>
       )}
 
-      <div className="board">
-        {Object.keys(tasks).map((column) => (
-          <div className="column" key={column}>
-            <h2>{column}</h2>
-            {tasks[column].map((task, index) => (
-              <div key={index} className="task-card">
-                <strong>{task.title}</strong>
-                <p>{task.description}</p>
-                <small>Due: {task.dueDate || "N/A"}</small>
-                <small>Priority: {task.priority}</small>
-              </div>
-            ))}
+      <div className={`kanban-board ${Neuo.className}`}>
+        {columns.map((col) => (
+          <div className={`kanban-column ${col.className}`} key={col.key}>
+            <div className="kanban-column-title">{col.title}.</div>
+            <div className="kanban-column-cards">
+              {tasks[col.key].map((task, index) => (
+                <div key={index} className="kanban-card">
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem', width: '100%' }}>
+                    <span style={{ fontSize: '1.5rem', flex: 1 }}>{task.title}.</span>
+                    <button className="kanban-edit-btn-small" title="Edit task">Edit</button>
+                  </div>
+                  <div style={{ fontSize: '.8rem', opacity: 0.85, width: '90%' }}>{task.description}</div>
+                  <div className="kanban-card-meta">
+                    <small>Due: {task.dueDate || "N/A"}</small>
+                    <small>Priority: {task.priority}</small>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
