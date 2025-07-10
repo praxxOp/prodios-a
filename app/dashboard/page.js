@@ -28,8 +28,21 @@ export default function DashboardPage() {
   const [taskPriority, setTaskPriority] = useState("Medium");
   const [selectedColumn, setSelectedColumn] = useState("To Do");
   const [showForm, setShowForm] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
+  const [editColumn, setEditColumn] = useState(null);
 
-  const handleAddTask = () => {
+  const resetForm = () => {
+    setNewTask("");
+    setTaskDescription("");
+    setTaskDueDate("");
+    setTaskPriority("Medium");
+    setSelectedColumn("To Do");
+    setEditIndex(null);
+    setEditColumn(null);
+    setShowForm(false);
+  };
+
+  const handleAddOrUpdateTask = () => {
     if (!newTask) return;
     const newTaskObj = {
       title: newTask,
@@ -37,15 +50,37 @@ export default function DashboardPage() {
       dueDate: taskDueDate,
       priority: taskPriority,
     };
-    setTasks((prev) => ({
-      ...prev,
-      [selectedColumn]: [...prev[selectedColumn], newTaskObj],
-    }));
-    setNewTask("");
-    setTaskDescription("");
-    setTaskDueDate("");
-    setTaskPriority("Medium");
-    setShowForm(false);
+
+    if (editIndex !== null && editColumn !== null) {
+      const updatedTasks = { ...tasks };
+      updatedTasks[editColumn].splice(editIndex, 1);
+      updatedTasks[selectedColumn].push(newTaskObj);
+      setTasks(updatedTasks);
+    } else {
+      setTasks((prev) => ({
+        ...prev,
+        [selectedColumn]: [...prev[selectedColumn], newTaskObj],
+      }));
+    }
+
+    resetForm();
+  };
+
+  const handleEditTask = (task, index, column) => {
+    setNewTask(task.title);
+    setTaskDescription(task.description);
+    setTaskDueDate(task.dueDate);
+    setTaskPriority(task.priority);
+    setSelectedColumn(column);
+    setEditIndex(index);
+    setEditColumn(column);
+    setShowForm(true);
+  };
+
+  const handleDeleteTask = (index, column) => {
+    const updatedTasks = { ...tasks };
+    updatedTasks[column].splice(index, 1);
+    setTasks(updatedTasks);
   };
 
   const handleLogout = async () => {
@@ -60,7 +95,13 @@ export default function DashboardPage() {
       <div className={`header ${Neuo.className}`}>
         <h1>Kanban Dashboard.</h1>
         <div className="header-buttons">
-          <button className="new-task-button" onClick={() => setShowForm(true)}>
+          <button
+            className="new-task-button"
+            onClick={() => {
+              resetForm();
+              setShowForm(true);
+            }}
+          >
             + Create New Task
           </button>
           <button className="logout-button" onClick={handleLogout}>
@@ -70,8 +111,8 @@ export default function DashboardPage() {
       </div>
 
       {showForm && (
-        <div className="task-form-overlay" onClick={() => setShowForm(false)}>
-          <div className="task-form" onClick={e => e.stopPropagation()}>
+        <div className="task-form-overlay" onClick={resetForm}>
+          <div className="task-form" onClick={(e) => e.stopPropagation()}>
             <input
               type="text"
               placeholder="Task Title"
@@ -106,7 +147,9 @@ export default function DashboardPage() {
                 </option>
               ))}
             </select>
-            <button onClick={handleAddTask}>Add</button>
+            <button onClick={handleAddOrUpdateTask}>
+              {editIndex !== null ? "Update" : "Add"}
+            </button>
           </div>
         </div>
       )}
@@ -118,11 +161,34 @@ export default function DashboardPage() {
             <div className="kanban-column-cards">
               {tasks[col.key].map((task, index) => (
                 <div key={index} className="kanban-card">
-                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem', width: '100%' }}>
-                    <span style={{ fontSize: '1.5rem', flex: 1 }}>{task.title}.</span>
-                    <button className="kanban-edit-btn-small" title="Edit task">Edit</button>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      marginBottom: "1rem",
+                      width: "100%",
+                    }}
+                  >
+                    <span style={{ fontSize: "1.5rem", width: '75%', wordBreak: 'break-word', whiteSpace: 'normal', display: 'block' }}>{task.title}.</span>
+                    <div style={{ display: "flex", flexDirection: 'column', gap: "0.5rem" }}>
+                      <button
+                        className="kanban-edit-btn-small"
+                        title="Edit task"
+                        onClick={() => handleEditTask(task, index, col.key)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="kanban-delete-btn-small"
+                        title="Delete task"
+                        onClick={() => handleDeleteTask(index, col.key)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
-                  <div style={{ fontSize: '.8rem', opacity: 0.85, width: '90%' }}>{task.description}</div>
+                  <div style={{ fontSize: '.8rem', opacity: 0.85, wordBreak: 'break-word', whiteSpace: 'normal', width: '100%' }}>{task.description}</div>
                   <div className="kanban-card-meta">
                     <small>Due: {task.dueDate || "N/A"}</small>
                     <small>Priority: {task.priority}</small>
